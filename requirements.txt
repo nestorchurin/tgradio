@@ -1,0 +1,16 @@
+# Основні залежності для Telegram Radio Bot
+pyrogram==2.0.106
+pytgcalls==2.2.5
+pyyaml==6.0.2
+
+# Додаткові залежності PyTgCalls
+ntgcalls==2.0.5
+
+# Криптографічні залежності для Pyrogram
+cryptg==0.4.0
+
+# Аудіо обробка (опціонально)
+pydub==0.25.1
+
+# Асинхронна робота
+asyncio-mqtt==0.16.2

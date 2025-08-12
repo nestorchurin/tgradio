@@ -1,0 +1,21 @@
+# Development requirements - додаткові пакети для розробки
+-r requirements.txt
+
+# Тестування
+pytest==7.4.4
+pytest-asyncio==0.21.1
+
+# Лінтинг та форматування
+flake8==6.1.0
+black==23.12.1
+isort==5.13.2
+
+# Документація
+mkdocs==1.5.3
+mkdocs-material==9.5.3
+
+# Typing
+mypy==1.8.0
+
+# Додаткові інструменти
+pre-commit==3.6.0

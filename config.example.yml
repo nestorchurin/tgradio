@@ -1,0 +1,33 @@
+telegram_bot:
+  - api_id: YOUR_API_ID_HERE
+    api_hash: YOUR_API_HASH_HERE
+    bot_token: ANY_TOKEN_HERE        # Не використовується для userbot
+    phone_number: "+YOUR_PHONE_NUMBER"  # ВАШ реальний номер телефону
+
+admins:
+  - YOUR_USER_ID_HERE
+
+radio_channel_id: "YOUR_CHANNEL_ID_HERE"
+
+# Налаштування радіо
+radio_settings:
+  station_name: "📻 Radio Bot"
+  jingle_frequency: 3    # Джингл кожні 3 треки
+  ads_frequency: 7       # Реклама кожні 7 треків
+  jingle_duration: 30    # Секунд
+  ads_duration: 45       # Секунд
+  track_duration: 180    # Секунд (3 хв)
+  default_volume: 5      # %
+
+  # Папки з контентом
+  folders:
+    music: "playlist"
+    jingles: "jingle"
+    ads: "ads"
+
+prefixes: "$"
+
+credentials:
+  bot_username: your_bot_username
+  author: nestor_churin
+  version: 1.0.0

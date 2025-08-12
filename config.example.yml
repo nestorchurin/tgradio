@@ -16,7 +16,6 @@ radio_settings:
   ads_frequency: 7       # Реклама кожні 7 треків
   jingle_duration: 30    # Секунд
   ads_duration: 45       # Секунд
-  track_duration: 180    # Секунд (3 хв)
   default_volume: 5      # %
 
   # Папки з контентом

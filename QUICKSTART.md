@@ -49,7 +49,8 @@ radio_channel_id: "CHANNEL_ID"   # ID каналу з мінусом
 radio_settings:
   jingle_frequency: 3             # Джингл кожні 3 треки
   ads_frequency: 7                # Реклама кожні 7 треків
-  track_duration: 180             # 3 хв на трек
+  jingle_duration: 30             # Секунд джингл
+  ads_duration: 45                # Секунд реклама
   default_volume: 5               # 5% гучність
 
 prefixes: "$"

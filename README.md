@@ -106,7 +106,6 @@ radio_settings:
   ads_frequency: 7       # Реклама кожні 7 треків
   jingle_duration: 30    # Тривалість джингла (сек)
   ads_duration: 45       # Тривалість реклами (сек)
-  track_duration: 180    # Тривалість треку (сек)
   default_volume: 5      # Початкова гучність (%)
 
   folders:
@@ -218,11 +217,10 @@ radio_settings:
   ads_frequency: 8       # Кожні 8 треків
 ```
 
-### Зміна тривалості
+### Зміна тривалості спец. контенту
 
 ```yaml
 radio_settings:
-  track_duration: 240    # 4 хвилини на трек
   jingle_duration: 20    # 20 секунд джингл
   ads_duration: 60       # 1 хвилина реклама
 ```

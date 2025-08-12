@@ -39,55 +39,12 @@ async def play_ads_now(chat_id):
 
 async def next_music_instant(chat_id):
     """Миттєво перейти на наступний музичний трек"""
-    global tracks_played
-    
     music_file = get_random_music()
     if music_file is None:
         raise RuntimeError("Немає аудіо файлів у папці playlist")
     
     track_name = await play_audio_file(chat_id, music_file, "music")
-    
-    # Збільшуємо лічільник для синхронізації з автоплей
-    tracks_played += 1
-    
     return track_name
-
-async def next_with_content_check(chat_id):
-    """Перейти на наступний контент з перевіркою типу (музика/реклама/джингл)"""
-    global tracks_played
-    
-    # Збільшуємо лічільник
-    tracks_played += 1
-    
-    # Перевіряємо, чи час для спеціального контенту
-    if tracks_played % RADIO_CONFIG["ads_frequency"] == 0:
-        # Час для реклами
-        if await play_ads_now(chat_id):
-            await asyncio.sleep(RADIO_CONFIG["ads_duration"])
-        
-        # Після реклами - музика
-        track_name = await next_music_instant(chat_id)
-        print(f"Після реклами грає: {track_name}")
-        return track_name
-        
-    elif tracks_played % RADIO_CONFIG["jingle_frequency"] == 0:
-        # Час для джингла
-        if await play_jingle_now(chat_id):
-            await asyncio.sleep(RADIO_CONFIG["jingle_duration"])
-        
-        # Після джингла - музика
-        track_name = await next_music_instant(chat_id)
-        print(f"Після джингла грає: {track_name}")
-        return track_name
-    else:
-        # Звичайна музика
-        music_file = get_random_music()
-        if music_file is None:
-            raise RuntimeError("Немає аудіо файлів у папці playlist")
-        
-        track_name = await play_audio_file(chat_id, music_file, "music")
-        print(f"Грає: {track_name}")
-        return track_name
 
 async def auto_play_loop(chat_id):
     """Основний цикл автоматичного відтворення"""
@@ -103,8 +60,8 @@ async def auto_play_loop(chat_id):
     
     try:
         while autoplay_running:
-            # Чекаємо час треку
-            await asyncio.sleep(RADIO_CONFIG["track_duration"])
+            # Чекаємо кінець треку (довгий час, поки не додамо event listener)
+            await asyncio.sleep(300)  # 5 хвилин
             
             # Перевіряємо підключення
             if not await check_connection(chat_id):
@@ -120,29 +77,23 @@ async def auto_play_loop(chat_id):
                 if await play_ads_now(chat_id):
                     await asyncio.sleep(RADIO_CONFIG["ads_duration"])
                 
-                # Після реклами - музика (без збільшення лічильника)
-                music_file = get_random_music()
-                if music_file:
-                    track_name = await play_audio_file(chat_id, music_file, "music")
-                    print(f"Після реклами грає: {track_name}")
+                # Після реклами - музика
+                track_name = await next_music_instant(chat_id)
+                print(f"Після реклами грає: {track_name}")
                 
             elif tracks_played % RADIO_CONFIG["jingle_frequency"] == 0:
                 # Час для джингла
                 if await play_jingle_now(chat_id):
                     await asyncio.sleep(RADIO_CONFIG["jingle_duration"])
                 
-                # Після джингла - музика (без збільшення лічільника)
-                music_file = get_random_music()
-                if music_file:
-                    track_name = await play_audio_file(chat_id, music_file, "music")
-                    print(f"Після джингла грає: {track_name}")
+                # Після джингла - музика
+                track_name = await next_music_instant(chat_id)
+                print(f"Після джингла грає: {track_name}")
                 
             else:
-                # Звичайна музика (без збільшення лічільника)
-                music_file = get_random_music()
-                if music_file:
-                    track_name = await play_audio_file(chat_id, music_file, "music")
-                    print(f"Грає: {track_name}")
+                # Звичайна музика
+                track_name = await next_music_instant(chat_id)
+                print(f"Грає: {track_name}")
                 
     except asyncio.CancelledError:
         print("Автоплей зупинено")
